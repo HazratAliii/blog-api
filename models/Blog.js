@@ -1,24 +1,32 @@
 const { Schema, model } = require("mongoose");
 
-const userSchema = new Schema({
-  id: {
-    type: String,
+const blogSchema = new Schema(
+  {
+    id: {
+      type: String,
+    },
+    name: {
+      title: String,
+    },
+    slug: {
+      type: String,
+      required: true,
+    },
+    image: {
+      type: String,
+    },
+    desc: {
+      type: String,
+    },
+    category: {
+      type: Object,
+    },
+    tags: {
+      type: Array,
+    },
   },
-  name: {
-    type: String,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  image: {
-    type: String,
-  },
-});
+  { timestamps: true }
+);
 
-const User = new model("User", userSchema);
-module.exports = User;
+const Blog = new model("Blog", blogSchema);
+module.exports = Blog;
