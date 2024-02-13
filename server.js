@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 const authRoute = require("./routes/auth");
 const blogRoute = require("./routes/blog");
@@ -8,6 +9,14 @@ const blogRoute = require("./routes/blog");
 const app = express();
 require("dotenv").config();
 const port = process.env.PORT;
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+    credentials: true,
+    allowedHeaders: "X-Requested-With, Content-Type, Authorization",
+    methods: "GET, POST, PATCH, PUT, POST, DELETE, OPTIONS",
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 
