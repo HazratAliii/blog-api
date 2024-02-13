@@ -8,14 +8,15 @@ router.get("/", (req, res) => {
 });
 
 router.post("/signup", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, name } = req.body;
   const user = await User.findOne({ email });
   if (user) {
     return res.status(409).json("User already exists");
   }
   const saltOrRounds = 10;
   const hash = await bcrypt.hash(password, saltOrRounds);
-  await User.create({ email, password: hash });
+  await User.create({ name, email, password: hash });
+
   return res.status(200).json("User created");
 });
 
@@ -26,12 +27,16 @@ router.post("/signin", async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (isMatch) {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      const retUser = {
+        name: user.name,
+        email: user.email,
+      };
       return res
         .cookie("accessToken", token, {
           httpOnly: true,
         })
         .status(200)
-        .json("Logged in");
+        .json(retUser);
     }
     return res.status(401).json("Invalid credentials");
   }
