@@ -33,7 +33,7 @@ router.post("/signin", async (req, res) => {
       };
       return res
         .cookie("accessToken", token, {
-          httpOnly: true,
+          // httpOnly: true,
         })
         .status(200)
         .json(retUser);
