@@ -5,6 +5,9 @@ const cors = require("cors");
 
 const authRoute = require("./routes/auth");
 const blogRoute = require("./routes/blog");
+const categoryRoute = require("./routes/category");
+const commentRoute = require("./routes/comment");
+const tagRoute = require("./routes/tag");
 
 const app = express();
 require("dotenv").config();
@@ -26,6 +29,9 @@ app.get("/ping", (req, res) => {
 
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/blog", blogRoute);
+app.use("/api/v1/category", categoryRoute);
+app.use("/api/v1/comment", commentRoute);
+app.use("/api/v1/tag", tagRoute);
 
 mongoose
   .connect(process.env.MONGODB_URI, {})

@@ -33,10 +33,10 @@ router.post("/signin", async (req, res) => {
       };
       return res
         .cookie("accessToken", token, {
-          // httpOnly: true,
+          httpOnly: true,
         })
         .status(200)
-        .json(retUser);
+        .json("Logged in");
     }
     return res.status(401).json("Invalid credentials");
   }

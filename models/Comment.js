@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const commentSchema = new commentSchema(
+const commentSchema = new Schema(
   {
     id: {
       type: String,
@@ -21,7 +21,6 @@ const commentSchema = new commentSchema(
     },
     parentCommentId: {
       type: String,
-      required: "true",
     },
   },
   { timestamps: true }
