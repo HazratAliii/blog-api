@@ -20,6 +20,29 @@ router.post("/signup", async (req, res) => {
   return res.status(200).json("User created");
 });
 
+// router.post("/signin", async (req, res) => {
+//   const { email, password } = req.body;
+//   const user = await User.findOne({ email });
+//   if (user) {
+//     const isMatch = await bcrypt.compare(password, user.password);
+//     if (isMatch) {
+//       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+//       const retUser = {
+//         name: user.name,
+//         email: user.email,
+//       };
+//       return res
+//         .cookie("accessToken", token, {
+//           httpOnly: true,
+//         })
+//         .status(200)
+//         .json("Logged in");
+//     }
+//     return res.status(401).json("Invalid credentials");
+//   }
+//   return res.status(404).json("User not found");
+// });
+
 router.post("/signin", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
@@ -32,11 +55,8 @@ router.post("/signin", async (req, res) => {
         email: user.email,
       };
       return res
-        .cookie("accessToken", token, {
-          httpOnly: true,
-        })
         .status(200)
-        .json("Logged in");
+        .json({ token, user: retUser, message: "Logged in" });
     }
     return res.status(401).json("Invalid credentials");
   }
