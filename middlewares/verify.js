@@ -16,7 +16,6 @@ const jwt = require("jsonwebtoken");
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1]; // Bearer <token>
-  console.log("HJere", token);
   if (!token) return res.status(401).json("You are not logged in");
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {

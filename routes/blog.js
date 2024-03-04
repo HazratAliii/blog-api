@@ -8,8 +8,8 @@ router.get("/test", verify, (req, res) => {
 router.post("/", verify, async (req, res) => {
   try {
     console.log(req.body);
-    await Blog.create(req.body);
-    res.status(201).json("Blog posted");
+    const data = await Blog.create(req.body);
+    res.status(201).json(data);
   } catch (e) {
     console.log(e);
     res.status(500).send(e);
