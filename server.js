@@ -8,6 +8,7 @@ const blogRoute = require("./routes/blog");
 const categoryRoute = require("./routes/category");
 const commentRoute = require("./routes/comment");
 const tagRoute = require("./routes/tag");
+const userRoute = require("./routes/user");
 
 const app = express();
 require("dotenv").config();
@@ -32,6 +33,7 @@ app.use("/api/v1/blog", blogRoute);
 app.use("/api/v1/category", categoryRoute);
 app.use("/api/v1/comment", commentRoute);
 app.use("/api/v1/tag", tagRoute);
+app.use("/api/v1/user", userRoute);
 
 mongoose
   .connect(process.env.MONGODB_URI, {})
