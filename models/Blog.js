@@ -5,8 +5,8 @@ const blogSchema = new Schema(
     id: {
       type: String,
     },
-    name: {
-      title: String,
+    title: {
+      type: String,
     },
     slug: {
       type: String,

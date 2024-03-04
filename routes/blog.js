@@ -7,6 +7,7 @@ router.get("/test", verify, (req, res) => {
 });
 router.post("/", verify, async (req, res) => {
   try {
+    console.log(req.body);
     await Blog.create(req.body);
     res.status(201).json("Blog posted");
   } catch (e) {
