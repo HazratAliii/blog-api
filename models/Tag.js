@@ -12,7 +12,7 @@ const tagSchema = new Schema(
     },
     tagSlug: {
       type: String,
-      required: true,
+      // required: true,
     },
   },
   { timestamps: true }

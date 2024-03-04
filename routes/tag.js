@@ -1,6 +1,7 @@
 const router = new require("express").Router();
 const verify = require("../middlewares/verify");
 const Tag = require("../models/Tag");
+const slugify = require("slugify");
 
 router.get("/test", verify, (req, res) => {
   console.log(req.user);
@@ -8,7 +9,12 @@ router.get("/test", verify, (req, res) => {
 });
 router.post("/", verify, async (req, res) => {
   try {
-    await Tag.create(req.body);
+    const obj = {
+      title: req.body.title,
+      tagSlug: slugify(req.body?.title, "_"),
+    };
+    await Tag.create(obj);
+
     res.status(201).json("Tag posted");
   } catch (e) {
     console.log(e);
