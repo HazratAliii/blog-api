@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const morgan = require("morgan");
 const cors = require("cors");
 
 const authRoute = require("./routes/auth");
@@ -26,6 +27,28 @@ app.use(cookieParser());
 
 app.get("/ping", (req, res) => {
   res.send("pong");
+});
+
+let logs = [];
+
+morgan.format("myformat", (tokens, req, res) => {
+  const logEntry = [
+    tokens.method(req, res),
+    tokens.url(req, res),
+    tokens.status(req, res),
+    tokens.res(req, res, "content-length"),
+    "-",
+    tokens["response-time"](req, res),
+    "ms",
+  ].join(" ");
+
+  console.log(logEntry);
+  logs.push(logEntry);
+  return logEntry;
+});
+app.use(morgan("myformat"));
+app.get("/logs", (req, res) => {
+  res.status(200).json(logs);
 });
 
 app.use("/api/v1/auth", authRoute);

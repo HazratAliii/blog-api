@@ -21,6 +21,7 @@ const commentSchema = new Schema(
     },
     parentCommentId: {
       type: String,
+      default: null,
     },
   },
   { timestamps: true }
