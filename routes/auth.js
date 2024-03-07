@@ -51,6 +51,7 @@ router.post("/signin", async (req, res) => {
     if (isMatch) {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       const retUser = {
+        id: user._id,
         name: user.name,
         email: user.email,
       };
