@@ -40,7 +40,7 @@ router.put("/update", verify, async (req, res) => {
         const obj = {
           title,
           slug: slugify(title, "_"),
-          ...rest,
+          rest,
         };
 
         await Blog.findOneAndUpdate({ _id: postId }, obj);

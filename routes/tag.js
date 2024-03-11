@@ -34,7 +34,17 @@ router.put("/update", verify, async (req, res) => {
     const tag = await Tag.findOne({ _id: req.body.tagId });
     if (tag) {
       const { tagId, ...others } = req.body;
-      await Tag.findOneAndUpdate({ _id: tagId }, others);
+      if (req.body?.title) {
+        const { title, ...rest } = req.body;
+        const obj = {
+          title,
+          tagSlug: slugify(title, "_"),
+          rest,
+        };
+        await Tag.findOneAndUpdate({ _id: tagId }, obj);
+      } else {
+        await Tag.findOneAndUpdate({ _id: tagId }, others);
+      }
       return res.status(201).json("Tag updated successfully");
     } else {
       return res.status(404).json("Tag not found");

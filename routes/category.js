@@ -32,7 +32,17 @@ router.put("/update", verify, async (req, res) => {
     const category = await Category.findOne({ _id: req.body.catId });
     if (category) {
       const { catId, ...others } = req.body;
-      await Category.findOneAndUpdate({ _id: catId }, others);
+      if (req.body?.title) {
+        const { title, ...rest } = req.body;
+        const obj = {
+          tilte,
+          categorySlug: slugify(title, "_"),
+          rest,
+        };
+        await Category.findOneAndUpdate({ _id: catId }, obj);
+      } else {
+        await Category.findOneAndUpdate({ _id: catId }, others);
+      }
       return res.status(201).json("Category updated successfully");
     } else {
       return res.status(404).json("Post not found");
