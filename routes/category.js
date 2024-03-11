@@ -1,14 +1,18 @@
 const router = new require("express").Router();
 const verify = require("../middlewares/verify");
 const Category = require("../models/Category");
-
+const slugify = require("slugify");
 router.get("/test", verify, (req, res) => {
   console.log(req.user);
   res.status(200).send("Hello");
 });
 router.post("/", verify, async (req, res) => {
   try {
-    await Category.create(req.body);
+    const obj = {
+      title: req.body.title,
+      categorySlug: slugify(req.body?.title, "_"),
+    };
+    await Category.create(obj);
     res.status(201).json("Category posted");
   } catch (e) {
     console.log(e);
