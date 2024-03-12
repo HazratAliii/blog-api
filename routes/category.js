@@ -35,7 +35,7 @@ router.put("/update", verify, async (req, res) => {
       if (req.body?.title) {
         const { title, ...rest } = req.body;
         const obj = {
-          tilte,
+          title,
           categorySlug: slugify(title, "_"),
           rest,
         };
