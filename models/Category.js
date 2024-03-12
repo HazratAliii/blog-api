@@ -6,10 +6,10 @@ const categorySchema = new Schema(
       type: String,
     },
 
-    categorySlug: {
+    title: {
       type: String,
     },
-    title: {
+    categorySlug: {
       type: String,
     },
   },
