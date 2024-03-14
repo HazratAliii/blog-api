@@ -12,7 +12,7 @@ const blogSchema = new Schema(
       type: String,
     },
     image: {
-      type: String,
+      type: [String],
     },
     desc: {
       type: String,

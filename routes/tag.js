@@ -29,6 +29,19 @@ router.get("/alltags", verify, async (req, res) => {
     res.status(500).json("Internal server error");
   }
 });
+
+router.get("/:id", verify, async (req, res) => {
+  try {
+    const tag = await Tag.findOne({ _id: req.params.id });
+    if (tag) {
+      return res.status(200).json(tag);
+    } else {
+      return res.staus(404).json("Comment not found");
+    }
+  } catch (e) {
+    return res.status(500).json(e);
+  }
+});
 router.put("/update", verify, async (req, res) => {
   try {
     const tag = await Tag.findOne({ _id: req.body.tagId });
