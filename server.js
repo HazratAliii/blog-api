@@ -51,6 +51,7 @@ app.get("/logs", (req, res) => {
   res.status(200).json(logs);
 });
 
+app.use("/uploads", express.static("uploads"));
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/blog", blogRoute);
 app.use("/api/v1/category", categoryRoute);
