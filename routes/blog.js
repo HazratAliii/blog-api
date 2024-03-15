@@ -2,32 +2,77 @@ const router = new require("express").Router();
 const verify = require("../middlewares/verify");
 const Blog = require("../models/Blog");
 const slugify = require("slugify");
+const upload = require("../middlewares/multer");
 
 router.get("/test", verify, (req, res) => {
   res.status(200).send("Hello");
 });
-router.post("/", verify, async (req, res) => {
-  try {
-    console.log(req.body);
-    const { title, ...rest } = req.body;
-    const obj = {
-      title,
-      slug: slugify(title, "_"),
-      ...rest,
-    };
-    const data = await Blog.create(obj);
-    res.status(201).json(data);
-  } catch (e) {
-    console.log(e);
-    res.status(500).send(e);
+// router.post(
+//   "/",
+//   verify,
+//   upload.fields([{ name: "photos", maxCount: 20 }]),
+//   async (req, res) => {
+//     // try {
+//     //   const { title, ...rest } = req.body;
+//     //   const obj = {
+//     //     title,
+//     //     slug: slugify(title, "_"),
+//     //     ...rest,
+//     //   };
+//     //   console.log("here");
+//     //   for (const file of req.files) {
+//     //     console.log(file.path);
+//     //   }
+//     //   const data = await Blog.create(obj);
+//     //   res.status(201).json(data);
+//     // } catch (e) {
+//     //   console.log(e);
+//     //   res.status(500).send(e);
+//     // }
+//     res.status(200).json("uploaded successfully", req.photos);
+//   }
+// );
+
+router.post(
+  "/",
+  verify,
+  upload.fields([{ name: "photos", maxCount: 20 }]),
+  async (req, res) => {
+    try {
+      const filePaths = req.files.photos.map((file) => file.path);
+      const data = await Blog.create({
+        title: req.body.title,
+        slug: slugify(req.body.title, "_"),
+        image: filePaths,
+      });
+
+      res.status(201).json(data);
+    } catch (e) {
+      console.log(e);
+      res.status(500).send(e);
+    }
   }
-});
-router.get("/allposts", async (req, res) => {
+);
+
+router.get("/allposts", verify, async (req, res) => {
   try {
     const posts = await Blog.find();
     return res.status(200).json(posts);
   } catch (e) {
     res.status(500).json("Internal server error");
+  }
+});
+router.get("/:slug", async (req, res) => {
+  console.log(req.params.slug);
+  try {
+    const post = await Blog.findOne({ slug: req.params.slug });
+    if (post) {
+      return res.status(200).json(post);
+    } else {
+      return res.staus(404).json("Blog not found");
+    }
+  } catch (e) {
+    return res.status(500).json("Internal serevr error");
   }
 });
 router.put("/update", verify, async (req, res) => {

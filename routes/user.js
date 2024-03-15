@@ -22,6 +22,19 @@ router.get("/allusers", verify, async (req, res) => {
     res.status(500).json("Internal server error");
   }
 });
+
+router.get("/:id", verify, async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.params.id });
+    if (user) {
+      return res.status(200).json(user);
+    } else {
+      return res.staus(404).json("Blog not found");
+    }
+  } catch (e) {
+    return res.status(500).json("Internal serevr error");
+  }
+});
 router.put("/update", verify, async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.body.userId });

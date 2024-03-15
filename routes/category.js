@@ -27,6 +27,20 @@ router.get("/allcategories", verify, async (req, res) => {
     res.status(500).json("Internal server error");
   }
 });
+
+router.get("/:id", verify, async (req, res) => {
+  try {
+    const cat = await Category.findOne({ _id: req.params.id });
+    if (cat) {
+      return res.status(200).json(cat);
+    } else {
+      return res.staus(404).json("Category not found");
+    }
+  } catch (e) {
+    return res.status(500).json(e);
+  }
+});
+
 router.put("/update", verify, async (req, res) => {
   try {
     const category = await Category.findOne({ _id: req.body.catId });
@@ -35,7 +49,7 @@ router.put("/update", verify, async (req, res) => {
       if (req.body?.title) {
         const { title, ...rest } = req.body;
         const obj = {
-          tilte,
+          title,
           categorySlug: slugify(title, "_"),
           rest,
         };
