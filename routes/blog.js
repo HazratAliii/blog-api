@@ -39,9 +39,12 @@ router.post(
   upload.fields([{ name: "photos", maxCount: 20 }]),
   async (req, res) => {
     try {
-      const filePaths = req.files.photos.map((file) => file.path);
+      const filePaths = req.files.photos?.map((file) => file.path);
       const data = await Blog.create({
         title: req.body.title,
+        category: req.body.category,
+        tags: req.body.tags,
+        desc: req.body.desc,
         slug: slugify(req.body.title, "_"),
         image: filePaths,
       });
