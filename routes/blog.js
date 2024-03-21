@@ -43,8 +43,9 @@ router.get("/allposts", verify, async (req, res) => {
 });
 router.get("/blogs", async (req, res) => {
   try {
-    const q = req.params.category || "unknown";
-    const blogs = await Blog.find({ category: q })
+    const q = req.query.category || "unknown";
+
+    const blogs = await Blog.find({ "category.name": q })
       .sort({ createdAt: -1 })
       .limit(5)
       .exec();
