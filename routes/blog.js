@@ -39,9 +39,12 @@ router.post(
   upload.fields([{ name: "photos", maxCount: 20 }]),
   async (req, res) => {
     try {
-      const filePaths = req.files.photos.map((file) => file.path);
+      const filePaths = req.files.photos?.map((file) => file.path);
       const data = await Blog.create({
         title: req.body.title,
+        category: req.body.category,
+        tags: req.body.tags,
+        desc: req.body.desc,
         slug: slugify(req.body.title, "_"),
         image: filePaths,
       });
@@ -62,9 +65,10 @@ router.get("/allposts", verify, async (req, res) => {
     res.status(500).json("Internal server error");
   }
 });
-router.get("/:id", verify, async (req, res) => {
+router.get("/:slug", async (req, res) => {
+  console.log(req.params.slug);
   try {
-    const post = await Blog.findOne({ _id: req.params.id });
+    const post = await Blog.findOne({ slug: req.params.slug });
     if (post) {
       return res.status(200).json(post);
     } else {
