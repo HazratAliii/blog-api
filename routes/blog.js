@@ -52,7 +52,8 @@ router.get("/blogs", async (req, res) => {
     if (blogs) {
       return res.status(200).json(blogs);
     } else {
-      return res.status(404).json("Blogs not found");
+      const blogs = await Blog.find().sort({ createdAt: -1 }).limit(5).exec();
+      return res.status(200).json(blogs);
     }
   } catch (e) {
     return res.status(500).json(e);
