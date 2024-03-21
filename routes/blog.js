@@ -7,31 +7,6 @@ const upload = require("../middlewares/multer");
 router.get("/test", verify, (req, res) => {
   res.status(200).send("Hello");
 });
-// router.post(
-//   "/",
-//   verify,
-//   upload.fields([{ name: "photos", maxCount: 20 }]),
-//   async (req, res) => {
-//     // try {
-//     //   const { title, ...rest } = req.body;
-//     //   const obj = {
-//     //     title,
-//     //     slug: slugify(title, "_"),
-//     //     ...rest,
-//     //   };
-//     //   console.log("here");
-//     //   for (const file of req.files) {
-//     //     console.log(file.path);
-//     //   }
-//     //   const data = await Blog.create(obj);
-//     //   res.status(201).json(data);
-//     // } catch (e) {
-//     //   console.log(e);
-//     //   res.status(500).send(e);
-//     // }
-//     res.status(200).json("uploaded successfully", req.photos);
-//   }
-// );
 
 router.post(
   "/",
