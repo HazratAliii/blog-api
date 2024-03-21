@@ -28,7 +28,7 @@ var upload = multer({
   //   fileSize: 1000000, // 1MB
   // },
   fileFilter: (req, file, cb) => {
-    if (file.fieldname === "photos") {
+    if (file.fieldname === "image") {
       if (
         file.mimetype === "image/png" ||
         file.mimetype === "image/jpg" ||

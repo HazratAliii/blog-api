@@ -36,10 +36,11 @@ router.get("/test", verify, (req, res) => {
 router.post(
   "/",
   verify,
-  upload.fields([{ name: "photos", maxCount: 20 }]),
+  upload.fields([{ name: "image", maxCount: 20 }]),
   async (req, res) => {
     try {
-      const filePaths = req.files.photos?.map((file) => file.path);
+      const filePaths = req.files.image?.map((file) => file.path);
+      console.log("file path ", req.files);
       const data = await Blog.create({
         title: req.body.title,
         category: req.body.category,
