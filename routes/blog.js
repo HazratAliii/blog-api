@@ -21,7 +21,7 @@ router.post(
         category: req.body.category,
         tags: req.body.tags,
         desc: req.body.desc,
-        slug: slugify(req.body.title, "_"),
+        slug: slugify(req.body.title, "-"),
         image: filePaths,
       });
 
@@ -117,7 +117,7 @@ router.put(
       blog.category = req.body.category || blog.category;
       blog.tags = req.body.tags || blog.tags;
       blog.desc = req.body.desc || blog.desc;
-      blog.slug = slugify(req.body.title || blog.title, "_");
+      blog.slug = slugify(req.body.title || blog.title, "-");
       if (filePaths) {
         blog.image = filePaths;
       }

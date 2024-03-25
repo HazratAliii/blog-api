@@ -11,7 +11,7 @@ router.post("/", verify, async (req, res) => {
   try {
     const obj = {
       title: req.body.title,
-      tagSlug: slugify(req.body?.title, "_"),
+      tagSlug: slugify(req.body?.title, "-"),
     };
     await Tag.create(obj);
 
@@ -51,7 +51,7 @@ router.put("/update", verify, async (req, res) => {
         const { title, ...rest } = req.body;
         const obj = {
           title,
-          tagSlug: slugify(title, "_"),
+          tagSlug: slugify(title, "-"),
           rest,
         };
         await Tag.findOneAndUpdate({ _id: tagId }, obj);

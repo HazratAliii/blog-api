@@ -10,7 +10,7 @@ router.post("/", verify, async (req, res) => {
   try {
     const obj = {
       title: req.body.title,
-      categorySlug: slugify(req.body?.title, "_"),
+      categorySlug: slugify(req.body?.title, "-"),
     };
     await Category.create(obj);
     res.status(201).json("Category posted");
@@ -50,7 +50,7 @@ router.put("/update", verify, async (req, res) => {
         const { title, ...rest } = req.body;
         const obj = {
           title,
-          categorySlug: slugify(title, "_"),
+          categorySlug: slugify(title, "-"),
           rest,
         };
         await Category.findOneAndUpdate({ _id: catId }, obj);
