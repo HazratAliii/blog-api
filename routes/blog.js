@@ -33,7 +33,7 @@ router.post(
   }
 );
 
-router.get("/allposts", verify, async (req, res) => {
+router.get("/allposts", async (req, res) => {
   try {
     const posts = await Blog.find();
     return res.status(200).json(posts);

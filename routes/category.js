@@ -19,7 +19,7 @@ router.post("/", verify, async (req, res) => {
     res.status(500).send(e);
   }
 });
-router.get("/allcategories", verify, async (req, res) => {
+router.get("/allcategories", async (req, res) => {
   try {
     const categories = await Category.find();
     return res.status(200).json(categories);
